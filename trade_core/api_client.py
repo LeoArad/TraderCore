@@ -2,10 +2,12 @@ import requests
 import configparser
 import json
 
+
 def get_config_parser(file_path='./custom.conf'):
     conf = configparser.ConfigParser()
     conf.read(file_path)
     return conf
+
 
 conf = get_config_parser()
 ip_address = conf.get("api", "ip_address")
@@ -26,7 +28,6 @@ class API_client:
 
     def update_token(self):
         self._access_token, self_refrsh_token = self.get_token()
-
 
     def _execute_post(self, uri: str, body: dict, headers=DEFAULT_HEADER):
         try:
