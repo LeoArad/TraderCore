@@ -22,18 +22,27 @@ class API_client:
         self.full_address = f"http://{ip_address}:{port}/"
         self.user = user
         self._password = password
+        self.update_token()
+
+    def update_token(self):
         self._access_token, self_refrsh_token = self.get_token()
 
 
     def _execute_post(self, uri: str, body: dict, headers=DEFAULT_HEADER):
         try:
-            return requests.post(f"{self.full_address}{uri}", headers=headers, data=json.dumps(body))
+            result = requests.post(f"{self.full_address}{uri}", headers=headers, data=json.dumps(body))
+            if result.status_code == 401:
+                self.update_token()
+            return result
         except Exception:
             return None
 
     def _execute_get(self, uri: str, headers=DEFAULT_HEADER):
         try:
-            return requests.get(f"{self.full_address}{uri}", headers=headers)
+            result = requests.get(f"{self.full_address}{uri}", headers=headers)
+            if result.status_code == 401:
+                self.update_token()
+            return result
         except Exception:
             return None
 

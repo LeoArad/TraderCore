@@ -27,6 +27,7 @@ def create_users_and_posts():
                 api_client_inner_user.create_post(f"Title number {(i + 1)  * (y + 1)}", f"Content number {(i + 1)  * (y + 1)}")
     print("Done with create_users_and_posts")
 
+
 def run_users_likes_process():
     print("In run_users_likes_process method")
     next_user_id = True
